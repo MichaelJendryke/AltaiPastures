@@ -1,6 +1,16 @@
 #https://gis.stackexchange.com/questions/28583/gdal-perform-simple-least-cost-path-analysis
 #https://gis.stackexchange.com/users/15607/ustroetz
 #http://scikit-image.org/docs/dev/api/skimage.graph.html#route-through-array
+#
+
+# create slope with
+#gdaldem slope -s 1111200 D:\DATA\Altai\srtm_54_03.tif D:\DATA\Altai\LCPA\srtm_54_03_slope.tif
+
+#reclass slope with
+# gdal_calc.py -A srtm_54_03_slope.tif --outfile=srtm_54_03_slope_reclass.tif --calc="0.0001*(A==0)+ A*(A>0)"
+
+# run main.py
+
 
 import gdal, osr
 from skimage.graph import route_through_array
@@ -75,8 +85,8 @@ def main(CostSurfacefn,outputPathfn,startCoord,stopCoord):
 
 
 if __name__ == "__main__":
-    CostSurfacefn = r'example_slope.tif'
+    CostSurfacefn = r'srtm_54_03_slope_reclass.tif'
     startCoord = (86.5929,48.9655)
     stopCoord = (87.4866,48.737)
-    outputPathfn = r'example_slope_LCP_3.tif'
+    outputPathfn = r'srtm_54_03_slope_reclass_path_001.tif'
     main(CostSurfacefn,outputPathfn,startCoord,stopCoord)
